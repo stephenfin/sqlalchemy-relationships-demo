@@ -14,6 +14,13 @@ class User(BASE):
     uuid = sa.Column(sa.String(36), nullable=False)
     name = sa.Column(sa.String)
 
+    addresses = orm.relationship(
+        'Address',
+        primaryjoin='User.uuid == Address.user_uuid',
+        back_populates='user',
+        foreign_keys='Address.user_uuid',
+    )
+
 
 class Address(BASE):
     __tablename__ = 'addresses'
@@ -26,8 +33,8 @@ class Address(BASE):
 
     user = orm.relationship(
         'User',
-        backref='addresses',
         primaryjoin='Address.user_uuid == User.uuid',
+        back_populates='addresses',
         foreign_keys=user_uuid,
     )
 
