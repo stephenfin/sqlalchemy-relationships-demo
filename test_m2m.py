@@ -25,6 +25,14 @@ class Parent(BASE):
     uuid = sa.Column(sa.String(36), nullable=False)
     name = sa.Column(sa.String)
 
+    children = orm.relationship(
+        'Child',
+        secondary='association',
+        primaryjoin='Parent.uuid == association.c.parent_uuid',
+        secondaryjoin='association.c.child_uuid == Child.uuid',
+        back_populates='parents',
+    )
+
 
 class Child(BASE):
     __tablename__ = 'children'
@@ -41,7 +49,7 @@ class Child(BASE):
         secondary='association',
         primaryjoin='Child.uuid == association.c.child_uuid',
         secondaryjoin='association.c.parent_uuid == Parent.uuid',
-        backref='children',
+        back_populates='children',
     )
 
 
