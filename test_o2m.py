@@ -2,6 +2,7 @@ import uuid
 
 import sqlalchemy as sa
 from sqlalchemy import orm
+from sqlalchemy import schema
 
 
 BASE = orm.declarative_base()
@@ -62,6 +63,10 @@ def main():
     for address in session.query(Address).all():
         print(f'Address: user={address.user_uuid}')
     print()
+
+    print('# Schemas')
+    print(schema.CreateTable(User.__table__))
+    print(schema.CreateTable(Address.__table__))
 
 
 if __name__ == '__main__':

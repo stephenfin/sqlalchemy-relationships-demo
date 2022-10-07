@@ -2,6 +2,7 @@ import uuid
 
 import sqlalchemy as sa
 from sqlalchemy import orm
+from sqlalchemy import schema
 
 
 BASE = orm.declarative_base()
@@ -79,6 +80,11 @@ def main():
         parents = [x.name for x in child.parents]
         print(f'Child: name={child.name}, parents={parents}')
     print()
+
+    print('# Schemas')
+    print(schema.CreateTable(association_table))
+    print(schema.CreateTable(Parent.__table__))
+    print(schema.CreateTable(Child.__table__))
 
 
 if __name__ == '__main__':
